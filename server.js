@@ -7,7 +7,7 @@ const user = require("./routes/user");
 const item = require("./routes/item");
 
 
-let uri = 'mongodb://localhost:27017/discussionBoard';
+let uri = 'mongodb://mongo:27017/discussionBoard';
 let opts = { useNewUrlParser: true };
 
 mongoose.connect(uri, opts).then(

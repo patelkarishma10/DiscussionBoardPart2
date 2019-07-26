@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+    server:
+        image: patelkarishma10/server:latest
+        build:
+            context: ./Dockerfile
+        ports:
+            - target: 5000
+              published: 5000
+              protocol: tcp
+    mongo:
+        image: mongo:latest
+        ports:
+            - target: 27017
+              published: 27017
+              protocol: tcp
