@@ -1,32 +1,32 @@
 const Validator = require("validator");
 const isEmpty = require("../is-empty");
- module.exports = function validateLoginInput(item) {
+ module.exports = function validateLoginInput(user) {
 let errors = {};
  // if these values are not present in the data object we are validating then they will be set to empty strings for the Validator.isEmpty
-item.username = !isEmpty(item.username) ? item.username : "";
-item.password = !isEmpty(item.password) ? item.password : "";
-item.email = !isEmpty(item.email) ? item.email : "";
+user.username = !isEmpty(user.username) ? user.username : "";
+user.password = !isEmpty(user.password) ? user.password : "";
+user.email = !isEmpty(user.email) ? user.email : "";
 
  //Username validation rules
-if (!Validator.isAlphanumeric(item.username)) {
+if (!Validator.isAlphanumeric(user.username)) {
 errors.username = "Username is invalid";
 }
 
-if (Validator.isEmpty(item.username)) {
+if (Validator.isEmpty(user.username)) {
 errors.username = "Username field is required";
 }
 
 //Password validation rules
-if (Validator.isEmpty(item.password)) {
+if (Validator.isEmpty(user.password)) {
 errors.password = "password field is required";
 }
 
 //Email validation rules
-if (Validator.isEmpty(item.email)) {
+if (Validator.isEmpty(user.email)) {
 errors.email = "email field is required";
 }
 
-if (!Validator.isEmail(item.email)) {
+if (!Validator.isEmail(user.email)) {
 errors.email = "email is invalid";
 }
 
