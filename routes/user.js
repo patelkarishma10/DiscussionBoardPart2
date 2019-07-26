@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const userValidation = require("../validation/user");
-//const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 
 
@@ -21,25 +21,20 @@ router.post("/register", (req, res) =>{
         email: req.body.email
     });
 
-    user.save()
+   bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+         if (err) throw err;
+         user.password = hash; 
+         user.save()
         .then(()=> {
-             res.json(user);
-             console.log('complete')
+            res.json(user);
         })
         .catch(err => res.status(404).json(err));
-   
-//    bcrypt.genSalt(10, (err, salt) => {
-//       bcrypt.hash(item.email, salt, (err, hash) => {
-//          if (err) throw err;
-//          item.email = hash; 
-//          item.save()
-//         .then(()=> {
-//             res.json(item);
-//         })
-//         .catch(err => res.status(404).json(err));
-//       });
-//    });
+      });
+   });
 
 });
+
+
 
 module.exports = router;
