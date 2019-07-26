@@ -22,8 +22,8 @@ router.post("/register", (req, res) =>{
         email: req.body.email
     });
 
-   User.find({$or: [{ username: req.body.username}, {email : req.body.email }]}).then(founduser => {
- if (founduser.length != 0) {
+   User.find({$or: [{ username: req.body.username}, {email : req.body.email }]}).then(foundUser => {
+ if (foundUser.length != 0) {
      res.json({message: "username or email is not unique"})
  } else {
      bcrypt.genSalt(10, (err, salt) => {
@@ -32,7 +32,7 @@ router.post("/register", (req, res) =>{
          user.password = hash; 
          user.save()
         .then(()=> {
-            res.json(user);
+            res.json({message: "successfully created account"});
         })
         .catch(err => res.status(404).json(err));
       });
@@ -54,8 +54,7 @@ router.get("/login", (req, res) => {
   User.findOne({ username: req.body.username }).then(user => {
  bcrypt.compare(req.body.password, user.password).then(isMatch => {
       if (isMatch) {
-//console.log(user);
-        res.json("success")
+        res.json({message: "successful login"})
       } else {
         errorlog.password = "Password Incorrect";
         return res.status(400).json(errorlog);
