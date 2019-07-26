@@ -21,9 +21,13 @@ router.post("/register", (req, res) =>{
         email: req.body.email
     });
 
-   bcrypt.genSalt(10, (err, salt) => {
+   User.find({$or: [{ username: req.body.username}, {email : req.body.email }]}).then(founduser => {
+ if (founduser.length != 0) {
+     res.json({message: "username or email is not unique"})
+ } else {
+     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
-         if (err) throw err;
+         //if (err) throw err;
          user.password = hash; 
          user.save()
         .then(()=> {
@@ -32,6 +36,8 @@ router.post("/register", (req, res) =>{
         .catch(err => res.status(404).json(err));
       });
    });
+ }
+    }).catch(err => res.status(404).json(err));
 
 });
 
