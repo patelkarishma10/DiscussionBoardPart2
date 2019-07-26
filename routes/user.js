@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
-//const itemValidation = require("../validation/user");
+const userValidation = require("../validation/user");
 //const bcrypt = require("bcryptjs");
 
 
@@ -10,12 +10,12 @@ const User = require("../models/user");
 // @desc    Create account
 // @access  Public
 router.post("/register", (req, res) =>{
-    // const {errors, isValid} = itemValidation(req.body);
-    // if (!isValid) {
-    //     return res.status(400).json(errors);
-    // }
+    const {errors, isValid} = userValidation(req.body);
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
 
-        const user = new User({
+    const user = new User({
         username: req.body.username,
         password: req.body.password,
         email: req.body.email
