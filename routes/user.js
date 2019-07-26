@@ -35,6 +35,30 @@ router.post("/register", (req, res) =>{
 
 });
 
+// @route   GET user/login
+// @desc    Login
+// @access  Public
+router.get("/login", (req, res) => {
+  let errorlog = {};
+
+  const password = req.body.password;
+  const username = req.body.username;
+
+  User.findOne({ username: req.body.username }).then(user => {
+ bcrypt.compare(req.body.password, user.password).then(isMatch => {
+      if (isMatch) {
+console.log(user);
+        res.json("success")
+      } else {
+        errorlog.password = "Password Incorrect";
+        return res.status(400).json(errorlog);
+      }
+    })
+    .catch(err => res.status(404).json(err));
+    }).catch(err => res.status(404).json(err));
+
+});
+
 
 
 module.exports = router;
