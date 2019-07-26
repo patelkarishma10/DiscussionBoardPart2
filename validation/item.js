@@ -20,15 +20,7 @@ if (Validator.isEmpty(item.content)) {
 errors.content = "content field is required";
 }
 
-// if (Validator.isEmpty(item.email)) {
-// errors.email = "email field is required";
-// }
-
-// if (!Validator.isEmail(item.email)) {
-// errors.email = "email is invalid";
-// }
-
- return {
+return {
 errors, 
 isValid: isEmpty(errors)
 }
