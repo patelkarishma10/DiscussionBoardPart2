@@ -15,6 +15,7 @@ router.post("/register", (req, res) =>{
         return res.status(400).json(errors);
     }
 
+    let password2 = req.body.password2;
     const user = new User({
         username: req.body.username,
         password: req.body.password,
